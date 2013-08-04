@@ -1,10 +1,11 @@
 # The zip application to be used.
 ZIP := zip
 
-# The target XPI file.
-ifneq ($(v),)
+
+ifneq ($(m),)
 xpi_file := ../cryptim_v$(v).xpi
 git := git
+mm := -m "$(m)"
 else
 xpi_file := ../cryptim$(v).xpi
 endif
@@ -16,12 +17,13 @@ all: $(xpi_file) $(git)
 	@echo
 	@echo "Build finished successfully."
 	@echo
-
+	
 .PHONY: git
-git:
-	@git commit -a -m '$(m)'
-	@git tag -a v$(v) -m '$(m)'
-	@git push server v$(v)
+git: $(xpi_file)
+	git commit -a $(mm)
+	git tag -a v$(v) $(mm)
+	git push server v$(v)
+
 
 # This cleans all temporary files and directories created by 'make'.
 .PHONY: clean
