@@ -22,9 +22,8 @@ all: $(xpi_file) $(git)
 git: $(xpi_file)
 	git add $(xpi_file)
 	git commit -a $(mm)
-	git push server
 	git tag -a v$(v) $(mm)
-	git push server v$(v)
+	git push server master v$(v)
 
 
 # This cleans all temporary files and directories created by 'make'.
