@@ -29,7 +29,7 @@ git: $(xpi_file) $(install_rdf)
 
 .PHONY:install_rdf
 install_rdf:
-	sed  's/<em:version>.*<\/em:version>/<em:version>0.1.1.5<\/em:version>/g' install.rdf > install.rdf.new
+	sed  's/<em:version>.*<\/em:version>/<em:version>$(v)<\/em:version>/g' install.rdf > install.rdf.new
 	mv install.rdf.new install.rdf
 	cat install.rdf
 
