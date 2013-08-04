@@ -1,7 +1,11 @@
 try {
 
 function log(key, value) {
-	dump("\n--cryptim-->"+key+" "+value+'\n');
+	if (!value) {
+		value = key
+		key=""
+	}
+	dump("\n--cryptim-->"+key+" "+value+'\n')
 }
 
 var Cc = Components.classes;
@@ -24,7 +28,7 @@ function onConnect(status)
     var statuses=["ERROR","connecting","CONNFAIL","AUTHENTICATING","AUTHFAIL","CONNECTED","DISSCONNECTED","ATTACHED"]
     log("strophe_status",statuses[status]);
     if (status == Strophe.Status.CONNECTED) {
-	log("echobot",'Send a message to ' + connection.jid + ' to talk to me.');
+	log("echobot", 'Send a message to ' + connection.jid + ' to talk to me.');
 
 	connection.addHandler(onMessage, null, 'message', null, null,  null); 
 	connection.send($pres().tree());
@@ -40,14 +44,14 @@ function onMessage(msg) {
     if (type == "chat" && elems.length > 0) {
 	var body = elems[0];
 
-	log('ECHOBOT: I got a message from ' + from + ': ' + 
+	log('echobot', 'I got a message from ' + from + ': ' + 
 	    Strophe.getText(body));
     
 	var reply = $msg({to: from, from: to, type: 'chat'})
             .cnode(Strophe.copyElement(body));
 	connection.send(reply.tree());
 
-	log('ECHOBOT: I sent ' + from + ': ' + Strophe.getText(body));
+	log('echobot', 'I sent ' + from + ': ' + Strophe.getText(body));
     }
 
     // we must return true to keep the handler alive.  
@@ -71,7 +75,6 @@ function StropheConnect(connect){
 
 
 
-StropheConnect(true);
 //StropheConnect(false);
 
 
@@ -104,6 +107,10 @@ var myExtension = {
 
         // now we know the url is new...
         log("opened-url",aURI.spec);
+		if (/facebook\.com\//.test(aURI.spec)) {
+			log("facebook")
+			StropheConnect(true);
+		}
 
 		//check if facebook
 

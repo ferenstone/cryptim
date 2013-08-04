@@ -7,7 +7,7 @@
     <em:id>cryptim@cryptim.tk</em:id>
     <em:name>Cryptim chat wrapper</em:name>
     <em:description>Cryptim is a plugin, that integrates secure OTR protocol into native chat clients.</em:description>
-    <em:version>0.1.2.0</em:version>
+    <em:version>0.1.2.1</em:version>
     <em:optionsType>2</em:optionsType>
     <em:optionsURL>chrome://cryptim/content/options.xul</em:optionsURL>
     <em:creator>Ferenstone</em:creator>
@@ -18,7 +18,7 @@
     <em:targetApplication>
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
-        <em:minVersion>1.5</em:minVersion>
+        <em:minVersion>7.0</em:minVersion>
         <em:maxVersion>20.*</em:maxVersion>
       </Description>
     </em:targetApplication>
