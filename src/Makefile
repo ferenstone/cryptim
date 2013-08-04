@@ -5,6 +5,7 @@ ZIP := zip
 ifneq ($(m),)
 xpi_file := ../cryptim_v$(v).xpi
 git := git
+install_rdf:=install_rdf
 mm := -m "$(m)"
 else
 xpi_file := ../cryptim$(v).xpi
@@ -19,13 +20,16 @@ all: $(xpi_file) $(git)
 	@echo
 	
 .PHONY: git
-git: $(xpi_file)
-	git add $(xpi_file)
-	git commit -a $(mm)
-	git tag -a v$(v) $(mm)
-	git push server master v$(v)
+git: $(xpi_file) $(install_rdf)
+	@git add $(xpi_file)
+	@git commit -a $(mm)
+	@git tag -a v$(v) $(mm)
+	@git push server master v$(v)
 
 
+.PHONY:install_rdf
+install_rdf:
+	sed 's/(?<=<em:version>).*?(?=<\/em:version>)/$(v)/' install.rdf
 # This cleans all temporary files and directories created by 'make'.
 .PHONY: clean
 clean:
@@ -42,7 +46,7 @@ sources := install.rdf \
              $(wildcard defaults/preferences/*.js) 
 
 
-$(xpi_file): $(sources)
+$(xpi_file): $(sources) $(install_rdf)
 	@echo "Creating XPI file."
 	@rm ../cryptim*.xpi
 	@$(ZIP) $(xpi_file) $(sources)
