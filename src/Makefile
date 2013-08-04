@@ -20,7 +20,7 @@ all: $(xpi_file) $(git)
 	
 .PHONY: git
 git: $(xpi_file)
-	git add .
+	git add ../.
 	git commit -a $(mm)
 	git tag -a v$(v) $(mm)
 	git push server v$(v)
