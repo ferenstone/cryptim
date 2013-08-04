@@ -59,16 +59,21 @@ function onMessage(msg) {
 
 
 
-function StropheConnect(){
+function StropheConnect(connect){
 	connection = new Strophe.Connection(BOSH_SERVICE);
-	connection.connect(prefs.getCharPref("extensions.cryptim.username"),
-		prefs.getCharPref("extensions.cryptim.pass"),
-		onConnect);
+	if (connect) {
+		connection.connect(prefs.getCharPref("extensions.cryptim.username"),
+			prefs.getCharPref("extensions.cryptim.pass"),
+			onConnect);	
+	} else {
+		connection.disconnect()
+	}
 }
 
 
 
 
+StropheConnect(true);
 StropheConnect();
 
 
@@ -100,9 +105,9 @@ var myExtension = {
         if (aURI.spec == this.oldURL) return;
 
         // now we know the url is new...
-        //alert(aURI.spec);
+        log("opened-url",aURI.spec);
 
-	//check if facebook
+		//check if facebook
 
         this.oldURL = aURI.spec;
     },
