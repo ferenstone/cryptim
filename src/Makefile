@@ -22,6 +22,7 @@ all: $(xpi_file) $(git)
 git: $(xpi_file)
 	git add $(xpi_file)
 	git commit -a $(mm)
+	git push server
 	git tag -a v$(v) $(mm)
 	git push server v$(v)
 

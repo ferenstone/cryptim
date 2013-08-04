@@ -1,5 +1,9 @@
 try {
 
+function log(key, value) {
+	dump("\n--cryptim-->"+key+" "+value+'\n');
+}
+
 var Cc = Components.classes;
 var Ci = Components.interfaces;
 
@@ -20,9 +24,9 @@ var connection = null;
 function onConnect(status)
 {
     var statuses=["ERROR","connecting","CONNFAIL","AUTHENTICATING","AUTHFAIL","CONNECTED","DISSCONNECTED","ATTACHED"]
-    dump("\n--cryptim-->strophe_status "+statuses[status]+'\n');
+    log("strophe_status",statuses[status]);
     if (status == Strophe.Status.CONNECTED) {
-	log('ECHOBOT: Send a message to ' + connection.jid + ' to talk to me.');
+	log("echobot",'Send a message to ' + connection.jid + ' to talk to me.');
 
 	connection.addHandler(onMessage, null, 'message', null, null,  null); 
 	connection.send($pres().tree());
@@ -121,5 +125,5 @@ window.addEventListener("load", function() { myExtension.init() }, false);
 window.addEventListener("unload", function() { myExtension.uninit() }, false);
 
 
-} catch (err){dump("\n--cryptim-->err "+err+'\n');}
+} catch (err){log("error",err)}
 
