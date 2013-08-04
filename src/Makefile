@@ -30,6 +30,9 @@ git: $(xpi_file) $(install_rdf)
 .PHONY:install_rdf
 install_rdf:
 	sed 's/(?<=<em:version>).*?(?=<\/em:version>)/$(v)/' install.rdf > install.rdf
+	echo "updated version in install.rdf"
+
+
 # This cleans all temporary files and directories created by 'make'.
 .PHONY: clean
 clean:
