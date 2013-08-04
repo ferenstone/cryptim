@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet type="text/css" href="chrome://global/skin/" ?>
+
+<!DOCTYPE overlay >
+
+<overlay id="cryptim-browser-overlay"
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <script type="application/x-javascript"
+    src="chrome://cryptim/content/strophe.js" />
+  <script type="application/x-javascript"
+    src="chrome://cryptim/content/browserOverlay.js" />
+
+</overlay>

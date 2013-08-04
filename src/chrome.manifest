@@ -1,0 +1,3 @@
+content   cryptim                content/
+
+overlay chrome://browser/content/browser.xul  chrome://cryptim/content/browserOverlay.xul

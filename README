@@ -1,0 +1,5 @@
+Cryptim is a Mozilla Firefox plugin, that integrates secure OTR protocol into native chat clients.
+
+"make" in src/ to build .xpi package.
+
+note-to-self: https://developer.mozilla.org/en-US/docs/Setting_up_extension_development_environment#Firefox_extension_proxy_file
