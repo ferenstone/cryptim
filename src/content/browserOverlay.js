@@ -12,8 +12,6 @@ var prefs =
 
 
 
-/*window.alert(Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefBranch).getCharPref("extensions.cryptim.username"))*/
-
 
 
 
@@ -74,7 +72,7 @@ function StropheConnect(connect){
 
 
 StropheConnect(true);
-StropheConnect();
+//StropheConnect(false);
 
 
 
