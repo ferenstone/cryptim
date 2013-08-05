@@ -93,13 +93,23 @@ function StropheConnect(connect){
 
 
 
-function examplePageLoad(event) {
+function onPageLoad(event) {
   if (event.originalTarget instanceof HTMLDocument) {
 	log("loaded-HTML",event.originalTarget.URL.toString())
-    var win = event.originalTarget.defaultView;
-if (/facebook\.com\//.test(event.originalTarget.URL.toString())) {
+	if (/facebook\.com\//.test(event.originalTarget.URL.toString())) {
 			log("facebook");
 			StropheConnect(true);
+			
+			
+		}
+  }
+}
+function onPageUnload(event) {
+  if (event.originalTarget instanceof HTMLDocument) {
+	log("unloaded-HTML",event.originalTarget.URL.toString())
+	if (/facebook\.com\//.test(event.originalTarget.URL.toString())) {
+			log("no-facebook");
+			StropheConnect(false);
 			
 			
 		}
@@ -110,13 +120,13 @@ if (/facebook\.com\//.test(event.originalTarget.URL.toString())) {
 // been initialised. We add a callback to the tabbed browser
 // when the browser's window gets loaded.
 window.addEventListener("load", function () {
-  // Add a callback to be run every time a document loads.
-  // note that this includes frames/iframes within the document
-  gBrowser.addEventListener("load", examplePageLoad, true);
+  gBrowser.addEventListener("load", onPageLoad, true);
+  gBrowser.addEventListener("unload", onPageUnload, true);
 }, false);
 
 window.addEventListener("unload", function () {
-  gBrowser.removeEventListener("load", examplePageLoad, true);
+  gBrowser.removeEventListener("load", onPageLoad, true);
+  gBrowser.removeEventListener("unload", onPageUnload, true);
 }, false);
 
 } catch (err){log("error",err)}
