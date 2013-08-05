@@ -1,12 +1,15 @@
 try {
-
 function log(key, value) {
 	if (!value) {
 		value = key
 		key=""
 	}
 	dump("\n--cryptim-->"+key+" "+value+'\n')
+	nsIConsoleService.logStringMessage("\n--cryptim-->"+key+" "+value+'\n')
 }
+
+
+log("cryptim-loaded")
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
@@ -106,10 +109,13 @@ var myExtension = {
         if (aURI.spec == this.oldURL) return;
 
         // now we know the url is new...
+		//log("HTML", content.document.getElementById("html").innerHTML);
         log("opened-url",aURI.spec);
 		if (/facebook\.com\//.test(aURI.spec)) {
-			log("facebook")
+			log("facebook");
 			StropheConnect(true);
+			
+			
 		}
 
 		//check if facebook
