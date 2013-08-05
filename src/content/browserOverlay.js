@@ -126,11 +126,13 @@ function onPageUnload(event) {
 // been initialised. We add a callback to the tabbed browser
 // when the browser's window gets loaded.
 window.addEventListener("load", function () {
+  log("event-added")
   gBrowser.addEventListener("load", onPageLoad, true);
   gBrowser.addEventListener("beforeunload", onPageUnload, true);
 }, false);
 
 window.addEventListener("unload", function () {
+  log("event-removed")
   gBrowser.removeEventListener("load", onPageLoad, true);
   gBrowser.removeEventListener("beforeunload", onPageUnload, true);
 }, false);
