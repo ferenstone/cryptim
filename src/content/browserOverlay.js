@@ -93,54 +93,31 @@ function StropheConnect(connect){
 
 
 
-
-
-var myExtension = {
-    oldURL: null,
-
-    init: function() {
-        gBrowser.addTabsProgressListener(this);
-    },
-
-    uninit: function() {
-        gBrowser.removeTabsProgressListener(this);
-    },
-
-    processNewURL: function(aURI) {
-        if (aURI.spec == this.oldURL) return;
-
-        // now we know the url is new...
-		//log("HTML", content.document.getElementById("html").innerHTML);
-        log("opened-url",aURI.spec);
-		if (/facebook\.com\//.test(aURI.spec)) {
+function examplePageLoad(event) {
+  if (event.originalTarget instanceof HTMLDocument) {
+	log("loaded-HTML",event.originalTarget.URL.toString())
+    var win = event.originalTarget.defaultView;
+if (/facebook\.com\//.test(event.originalTarget.URL.toString())) {
 			log("facebook");
 			StropheConnect(true);
 			
 			
 		}
+  }
+}
 
-		//check if facebook
+// do not try to add a callback until the browser window has
+// been initialised. We add a callback to the tabbed browser
+// when the browser's window gets loaded.
+window.addEventListener("load", function () {
+  // Add a callback to be run every time a document loads.
+  // note that this includes frames/iframes within the document
+  gBrowser.addEventListener("load", examplePageLoad, true);
+}, false);
 
-        this.oldURL = aURI.spec;
-    },
-
-    // nsIWebProgressListener
-    QueryInterface: XPCOMUtils.generateQI(["nsIWebProgressListener",
-                                           "nsISupportsWeakReference"]),
-
-    onLocationChange: function(aBrowser, aProgress, aRequest, aURI) {
-        this.processNewURL(aURI);
-    },
-
-    onStateChange: function() {},
-    onProgressChange: function() {},
-    onStatusChange: function() {},
-    onSecurityChange: function() {}
-};
-
-window.addEventListener("load", function() { myExtension.init() }, false);
-window.addEventListener("unload", function() { myExtension.uninit() }, false);
-
+window.addEventListener("unload", function () {
+  gBrowser.removeEventListener("load", examplePageLoad, true);
+}, false);
 
 } catch (err){log("error",err)}
 
