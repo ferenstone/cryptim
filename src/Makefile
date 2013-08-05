@@ -22,6 +22,7 @@ all: $(xpi_file) $(git)
 .PHONY: git
 git: $(xpi_file) $(install_rdf)
 	@git add $(xpi_file)
+	@git status
 	@git commit -a $(mm)
 	@git tag -a v$(v) $(mm)
 	@git push server master v$(v)

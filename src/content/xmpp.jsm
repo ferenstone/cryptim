@@ -22,6 +22,8 @@ const Cc = Components.classes;
 const Ci = Components.interfaces;
 const Cu = Components.utils;
 
+Cu.import("resource://gre/modules/Services.jsm");
+
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
 // This gives us >=2^30 unique timer IDs, enough for 1 per ms for 12.4 days.
@@ -750,13 +752,7 @@ Strophe = {
     _makeGenerator: function () {
         var doc;
 
-        if (document.implementation.createDocument === undefined) {
-            doc = this._getIEXmlDom();
-            doc.appendChild(doc.createElement('strophe'));
-        } else {
-            doc = document.implementation
-                .createDocument('jabber:client', 'strophe', null);
-        }
+		doc = Services.appShell.hiddenDOMWindow.document;
 
         return doc;
     },
@@ -1768,8 +1764,8 @@ Strophe.Request.prototype = {
     {
         var xhr = null;
         //not compatible with others than ff
-        //if (window.XMLHttpRequest) {
-            xhr = new XMLHttpRequest();
+        //if (Services.appShell.hiddenDOMWindow.XMLHttpRequest) {
+            xhr = new Services.appShell.hiddenDOMWindow.XMLHttpRequest();
             if (xhr.overrideMimeType) {
                 xhr.overrideMimeType("text/xml");
             }
@@ -3674,7 +3670,6 @@ var connection = null;
 
 function onConnect(status)
 {
-	log("onconnect","loaded")
     var statuses=["ERROR","CONNECTING","CONNFAIL","AUTHENTICATING","AUTHFAIL","CONNECTED","DISSCONNECTED","DISSCONNECTING","ATTACHED"]
     log("strophe_status",statuses[status]);
     if (status == Strophe.Status.CONNECTED) {

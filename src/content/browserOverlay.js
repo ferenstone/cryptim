@@ -32,14 +32,12 @@ function onPageLoad(event) {
   if (event.originalTarget instanceof HTMLDocument) {
 	log("loaded-HTML",event.originalTarget.URL.toString())
 	if (/facebook\.com\//.test(event.originalTarget.URL.toString())) {
-			log("facebook",'"'+connection.connected.toString()+'"');
+			log("facebook");
 			facebooks += 1;
 			if (!connection.connected) {
-				log("attempting to connect")
 				connection.connect(prefs.getCharPref("extensions.cryptim.username"),
 					prefs.getCharPref("extensions.cryptim.pass"),
 					onConnect);
-				log ("connected?")
 			}
 			
 			
