@@ -29,7 +29,7 @@ var connection = null;
 
 function onConnect(status)
 {
-    var statuses=["ERROR","connecting","CONNFAIL","AUTHENTICATING","AUTHFAIL","CONNECTED","DISSCONNECTED","ATTACHED"]
+    var statuses=["ERROR","CONNECTING","CONNFAIL","AUTHENTICATING","AUTHFAIL","CONNECTED","DISSCONNECTED","DISSCONNECTING","ATTACHED"]
     log("strophe_status",statuses[status]);
     if (status == Strophe.Status.CONNECTED) {
 	log("echobot", 'Send a message to ' + connection.jid + ' to talk to me.');
@@ -64,13 +64,12 @@ function onMessage(msg) {
 }
 
 
-
+var connection = new Strophe.Connection(BOSH_SERVICE);
 function StropheConnect(connect){
-	connection = new Strophe.Connection(BOSH_SERVICE);
 	if (connect) {
 		connection.connect(prefs.getCharPref("extensions.cryptim.username"),
 			prefs.getCharPref("extensions.cryptim.pass"),
-			onConnect);	
+			onConnect);
 	} else {
 		connection.disconnect()
 	}
@@ -92,13 +91,16 @@ function StropheConnect(connect){
 
 
 
-
+var facebooks = 0;
 function onPageLoad(event) {
   if (event.originalTarget instanceof HTMLDocument) {
 	log("loaded-HTML",event.originalTarget.URL.toString())
 	if (/facebook\.com\//.test(event.originalTarget.URL.toString())) {
 			log("facebook");
-			StropheConnect(true);
+			facebooks += 1;
+			if (!connection.connected) {
+				StropheConnect(true);
+			}
 			
 			
 		}
@@ -109,7 +111,11 @@ function onPageUnload(event) {
 	log("unloaded-HTML",event.originalTarget.URL.toString())
 	if (/facebook\.com\//.test(event.originalTarget.URL.toString())) {
 			log("no-facebook");
-			StropheConnect(false);
+			facebooks -= 1;
+			if (facebooks <= 0) {
+				log("disconnecting")
+				StropheConnect(false);
+			}
 			
 			
 		}
