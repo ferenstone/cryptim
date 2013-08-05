@@ -127,12 +127,12 @@ function onPageUnload(event) {
 // when the browser's window gets loaded.
 window.addEventListener("load", function () {
   gBrowser.addEventListener("load", onPageLoad, true);
-  gBrowser.addEventListener("unload", onPageUnload, true);
+  gBrowser.addEventListener("beforeunload", onPageUnload, true);
 }, false);
 
 window.addEventListener("unload", function () {
   gBrowser.removeEventListener("load", onPageLoad, true);
-  gBrowser.removeEventListener("unload", onPageUnload, true);
+  gBrowser.removeEventListener("beforeunload", onPageUnload, true);
 }, false);
 
 } catch (err){log("error",err)}
