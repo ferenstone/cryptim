@@ -1,3 +1,6 @@
+try {
+    
+var EXPORTED_SYMBOLS = ["Strophe","$build","$msg","$iq","$pres"];
 // This code was written by Tyler Akins and has been placed in the
 // public domain.  It would be nice if you left this header intact.
 // Base64 code from Tyler Akins -- http://rumkin.com
@@ -1715,14 +1718,15 @@ Strophe.Request.prototype = {
     _newXHR: function ()
     {
         var xhr = null;
-        if (window.XMLHttpRequest) {
+        //not compatible with others than ff
+        //if (window.XMLHttpRequest) {
             xhr = new XMLHttpRequest();
             if (xhr.overrideMimeType) {
                 xhr.overrideMimeType("text/xml");
             }
-        } else if (window.ActiveXObject) {
+        /*} else if (window.ActiveXObject) {
             xhr = new ActiveXObject("Microsoft.XMLHTTP");
-        }
+        }*/
 
         // use Function.bind() to prepend ourselves as an argument
         xhr.onreadystatechange = this.func.bind(null, this);
@@ -3604,9 +3608,12 @@ if (callback) {
 }
 
 })(function () {
-    window.Strophe = arguments[0];
-    window.$build = arguments[1];
-    window.$msg = arguments[2];
-    window.$iq = arguments[3];
-    window.$pres = arguments[4];
+    Strophe = arguments[0];
+    $build = arguments[1];
+    $msg = arguments[2];
+    $iq = arguments[3];
+    $pres = arguments[4];
 });
+} catch(e) {
+    dump("strophe-error "+e);
+}
