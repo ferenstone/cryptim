@@ -5,7 +5,8 @@ function log(key, value) {
 		key=""
 	}
 	dump("\n--cryptim-->"+key+" "+value+'\n')
-	nsIConsoleService.logStringMessage("\n--cryptim-->"+key+" "+value+'\n')
+	var consoleService = Components.classes["@mozilla.org/consoleservice;1"]                                  .getService(Components.interfaces.nsIConsoleService);
+	consoleService.logStringMessage("\n--cryptim-->"+key+" "+value+'\n'); 
 }
 
 
